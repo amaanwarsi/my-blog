@@ -11,32 +11,36 @@ $dbname = "blogdb";
 
 $conn = new mysqli($hostname, $username, $password, $dbname);
 
-
-$sql = "SELECT * FROM articles";
-$result = $conn->query($sql);
-
-
-// 1. Call Element by its position (index number) var[3]
-
-// 2. Loop through the whole array var[n]
-
-// {"red", "blue", "orange", "black"}
-// 0       1           2       3
-
-// echo $rows;
-// var_dump($result);
-
-// {
-//     1
-//     2
-//     3
-//     4
-//     5
-//     n
-//     
+// if($conn->connect_error){
+//     echo "Failed to connect";
 // }
 
-// echo $arr[1]
+// GET = $_GET
+// POST = $_POST
+
+if (isset($_POST["submit"])) {
+    $title = $_POST["title"];
+    $body = $_POST["body"];
+
+
+    $stmt = "INSERT INTO articles(title,body) VALUE('$title', '$body')";
+    echo $stmt;
+
+    $insert = $conn->query($stmt);
+
+    // error / id
+
+    if($insert){
+        echo "Data inserted successfully";
+    } else{
+        echo "Failed to save the data";
+    }
+
+}
+
+
+
+
 ?>
 
 
@@ -52,25 +56,20 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-    <?php include './components/header.php';  ?>
-
+   <?php include './components/header.php';  ?>
     <main>
         <!-- This is our main content area. This is where the content of each page will go. For example, on the home page, we might have a list of recent blog posts. On the about page, we might have some information about the author. On the contact page, we might have a contact form. -->
-        <h1>Articles</h1>
-        <h3>Total found: <?php echo $result->num_rows;  ?></h3>
 
-        <?php
-            while($row = $result->fetch_assoc()){
-                echo $row["title"]."<br>";
-            }
+        <form action="" method="POST">
+            <input name="title" type="text" placeholder="Enter title" required />
+            <br />
+            <br />
+            <textarea name="body" rows="7" placeholder="Enter Body of the article" required></textarea>
+            <br />
+            <br />
+            <button name="submit" type="submit">Send</button>
+        </form>
 
-            
-            // echo $rows["title"];
-            
-            // echo "<pre>";
-            // var_dump($rows);
-            // echo "</pre>";
-        ?>
     </main>
 
 
