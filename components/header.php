@@ -8,6 +8,6 @@
              <li><a href="/trending">Trending</a></li>
          </ul>
 
-         <a href="/contact" class="nav-btn">Contact</a>
+         <a href="../new.php" class="nav-btn">Submit</a>
      </nav>
  </header>
