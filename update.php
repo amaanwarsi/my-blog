@@ -18,12 +18,37 @@ $conn = new mysqli($hostname, $username, $password, $dbname);
 // GET = $_GET
 // POST = $_POST
 
+
+if (!empty($_GET["id"])) {
+
+    $stmt = "SELECT * FROM articles WHERE id = ".$_GET["id"];
+    $search = $conn->query($stmt);
+
+    $row = $search->fetch_assoc();
+
+    // var_dump($row);
+}
+
+// !true
+// not true
+// false
+
+// function avg($a, $b)
+// {
+//     $avg = ($a + $b) / 2;
+//     return $avg;
+// }
+
+// echo avg(5, 99);
+
+
 if (isset($_POST["submit"])) {
     $title = $_POST["title"];
     $body = $_POST["body"];
+    $article_id = $_POST["article_id"];
 
 
-    $stmt = "INSERT INTO articles(title,body) VALUE('$title', '$body')";
+    $stmt = "UPDATE articles SET title = '$title', body='$body' WHERE id=".$article_id;
 
     $insert = $conn->query($stmt);
 
@@ -60,9 +85,10 @@ if (isset($_POST["submit"])) {
 
         <div class="form-wrapper">
             <form action="" method="POST">
-                <h1>Add new Article</h1>
-                <input class="text-field" name="title" type="text" placeholder="Enter title" required />
-                <textarea class="body-field" name="body" rows="7" placeholder="Enter Body of the article" required></textarea>
+                <h1>Update the Article</h1>
+                <input type="hidden" name="article_id" value="<?= $_GET['id'] ?>"/>
+                <input class="text-field" name="title" type="text" value="<?= $row["title"] ?>" placeholder="Enter title" required />
+                <textarea class="body-field" name="body" rows="7" placeholder="Enter Body of the article" required><?= $row["body"] ?></textarea>
                 <button class="btn" name="submit" type="submit">Send</button>
             </form>
         </div>
