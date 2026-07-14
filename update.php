@@ -18,10 +18,11 @@ $conn = new mysqli($hostname, $username, $password, $dbname);
 // GET = $_GET
 // POST = $_POST
 
+// $row = [];
 
 if (!empty($_GET["id"])) {
 
-    $stmt = "SELECT * FROM articles WHERE id = ".$_GET["id"];
+    $stmt = "SELECT * FROM articles WHERE id = " . $_GET["id"];
     $search = $conn->query($stmt);
 
     $row = $search->fetch_assoc();
@@ -41,6 +42,9 @@ if (!empty($_GET["id"])) {
 
 // echo avg(5, 99);
 
+// delete : table ke andar row ko gayab
+// drop: puri table ko khtm
+
 
 if (isset($_POST["submit"])) {
     $title = $_POST["title"];
@@ -48,7 +52,7 @@ if (isset($_POST["submit"])) {
     $article_id = $_POST["article_id"];
 
 
-    $stmt = "UPDATE articles SET title = '$title', body='$body' WHERE id=".$article_id;
+    $stmt = "UPDATE articles SET title = '$title', body='$body' WHERE id=" . $article_id;
 
     $insert = $conn->query($stmt);
 
@@ -84,13 +88,19 @@ if (isset($_POST["submit"])) {
         <!-- This is our main content area. This is where the content of each page will go. For example, on the home page, we might have a list of recent blog posts. On the about page, we might have some information about the author. On the contact page, we might have a contact form. -->
 
         <div class="form-wrapper">
-            <form action="" method="POST">
-                <h1>Update the Article</h1>
-                <input type="hidden" name="article_id" value="<?= $_GET['id'] ?>"/>
-                <input class="text-field" name="title" type="text" value="<?= $row["title"] ?>" placeholder="Enter title" required />
-                <textarea class="body-field" name="body" rows="7" placeholder="Enter Body of the article" required><?= $row["body"] ?></textarea>
-                <button class="btn" name="submit" type="submit">Send</button>
-            </form>
+            <?php if (!empty($_GET["id"])) { ?>
+                <form action="" method="POST">
+                    <h1>Update the Article</h1>
+                    <input type="hidden" name="article_id" value="<?= $_GET['id'] ?>" />
+                    <input class="text-field" name="title" type="text" value="<?= $row["title"] ?>" placeholder="Enter title" required />
+                    <textarea class="body-field" name="body" rows="7" placeholder="Enter Body of the article" required><?= $row["body"] ?></textarea>
+                    <button class="btn" name="submit" type="submit">Send</button>
+                </form>
+            <?php } else{ ?>
+            <h2>Request is invalid please send id of the article</h2>
+            <?php }  ?>
+
+
         </div>
     </main>
 

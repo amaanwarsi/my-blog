@@ -93,6 +93,7 @@ anc, abc, yas, lope = "" ''
                             <p class="card-text">' . substr($row["body"], 0, 66) . '...</p>
                             <a href="#" class="btn btn-primary">Read more</a>
                             <a href="./update.php?id='.$row["id"].'" class="card-link">Update</a>
+                            <a href="./delete.php?id='.$row["id"].'" class="card-link">DELETE</a>
                         </div>
                     </div>
             </div>';
