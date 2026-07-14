@@ -8,16 +8,13 @@ $hostname = "localhost";
 $username = "root";
 $password = "password";
 $dbname = "blogdb";
-
 $conn = new mysqli($hostname, $username, $password, $dbname);
-
 
 if (!empty($_GET["id"])) {
 
     $stmt = "DELETE FROM articles WHERE id = " . $_GET["id"];
     $delete = $conn->query($stmt);
 
-    // var_dump($row);
 }
 
 
